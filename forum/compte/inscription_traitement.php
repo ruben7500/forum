@@ -1,6 +1,6 @@
 <?php
-require_once '../config.php';
 session_start();
+require_once '../config.php';
 
 if (isset($_POST['pseudo']) && isset($_POST['email']) && isset($_POST['password'])) {
     $pseudo = htmlspecialchars($_POST['pseudo']);
@@ -32,15 +32,16 @@ if (isset($_POST['pseudo']) && isset($_POST['email']) && isset($_POST['password'
                 if (strlen($email) <= 100) {
                     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                         $password = hash('sha256', $password);
-                        $insert = $bdd->prepare('INSERT INTO membre(pseudo, password, email) VALUES(:pseudo, :password, :email)');
+                        $insert = $bdd->prepare('INSERT INTO membre(pseudo, password, email, role) VALUES(:pseudo, :password, :email, :role)');
                         $insert->execute(array(
                             'pseudo' => $pseudo,
                             'password' => $password,
-                            'email' => $email
+                            'email' => $email,
+                            'role' => "normal"
                         ));
 
                         $_SESSION['userName'] = $pseudo;
-                        header('Location: ../index.php');
+                        header('Location: ../index.php?reg_err=success');
                         exit();
                     } else {
                         header('Location: inscription.php?reg_err=email');
