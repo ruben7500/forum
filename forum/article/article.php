@@ -1,8 +1,7 @@
 <?php
-ini_set('display_errors','off');
 session_start();
 require_once '../config.php';
-$name = $_SESSION['userName'];
+$name = isset($_SESSION['userName']) ? $_SESSION['userName'] : false;
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +25,6 @@ $name = $_SESSION['userName'];
                                 <div class="form-group">
                                     <textarea name="contenu" id="contenu" class="form-control" placeholder="Contenu" required="required" autocomplete="off"></textarea>
                                 </div>
-
                                 <script>
                                     var textarea = document.getElementById("contenu");
                                     textarea.addEventListener("input", function() {
@@ -39,6 +37,24 @@ $name = $_SESSION['userName'];
                                         <input type="file" name="img" class="custom-file-input" id="img" required="required" autocomplete="off" accept="image/jpeg, image/png, image/gif">
                                         <label class="custom-file-label" for="img">Choisir un fichier</label>
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="categorie">categorie :</label>
+                                    <select name="categorie">
+                                        <option value="">--Choisis une categorie--</option>
+                                        <?php
+                                        $sql = "SELECT nom FROM categorie";
+                                        $result = $bdd->query($sql);
+                                        if ($result->rowCount() > 0) {
+                                            $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+                                            foreach ($rows as $row) {
+                                                echo "<option value='" . $row['nom'] . "'>" . $row['nom'] . "</option>";
+                                            }
+                                        } else {
+                                            echo "<option value=''>Aucune categorie trouvée</option>";
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary btn-block">Publier</button>
