@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once '../config.php';
-$name = $_SESSION['userName'];
+$name = isset($_SESSION['userName']) ? $_SESSION['userName'] : false;
 ?>
 
 <!DOCTYPE html>
@@ -41,8 +41,9 @@ $name = $_SESSION['userName'];
                     <a type="button" href="./all-profils.php" class="btn btn-outline-secondary">Voir tous les profils</a>
                 </div>
                 <div class="row py-3 justify-content-center">
-                    <a type="button" href="" class="btn btn-outline-secondary">Activité de votre compte</a>
-                </div><div class="row py-3 justify-content-center">
+                    <a type="button" href="./info-compte.php" class="btn btn-outline-secondary">Activité de votre compte</a>
+                </div>
+                <div class="row py-3 justify-content-center">
                     <a type="button" href="./deconnexion.php" class="btn btn-outline-secondary">Deconnexion</a>
                 </div>
             </div>

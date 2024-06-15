@@ -7,17 +7,6 @@ if (isset($_POST['pseudo']) && isset($_POST['email']) && isset($_POST['password'
     $email = htmlspecialchars($_POST['email']);
     $password = htmlspecialchars($_POST['password']);
 
-    function getIp() {
-        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            $ip = $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $ip = $_SERVER['REMOTE_ADDR'];
-        }
-        return $ip;
-    }
-
     $check = $bdd->prepare('SELECT pseudo, email, password FROM membre WHERE email = ?');
     $check->execute(array($email));
     $row = $check->rowCount();
@@ -39,9 +28,7 @@ if (isset($_POST['pseudo']) && isset($_POST['email']) && isset($_POST['password'
                             'email' => $email,
                             'role' => "normal"
                         ));
-
-                        $_SESSION['userName'] = $pseudo;
-                        header('Location: ../index.php?reg_err=success');
+                        header('Location: connexion.php?reg_err=success');
                         exit();
                     } else {
                         header('Location: inscription.php?reg_err=email');

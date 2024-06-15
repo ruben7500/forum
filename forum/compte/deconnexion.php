@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once '../config.php';
-$name = $_SESSION['userName'];
+$name = isset($_SESSION['userName']) ? $_SESSION['userName'] : false;
 
 if (isset($_SESSION['userName'])) {
     $pof = $_SESSION['userName'];

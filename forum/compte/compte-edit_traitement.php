@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once '../config.php';
-$name = $_SESSION['userName'];
+$name = isset($_SESSION['userName']) ? $_SESSION['userName'] : false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['pseudo'])) {
     $newPseudo = $_POST['pseudo'];
